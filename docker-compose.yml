@@ -1,0 +1,34 @@
+services:
+  database:
+    container_name: db_vertice
+    image: postgres:16.9-bullseye
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - vertice_data:/var/lib/postgresql/data
+    networks:
+      - vertice_network
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_DB: ${DATABASE_NAME}
+      TZ: America/Lima
+  
+  adminer:
+    container_name: vertice_adminer
+    image: adminer:latest
+    restart: always
+    ports:
+      - "5050:8080"
+    depends_on:
+      - database
+    networks:
+      - vertice_network
+
+networks:
+  vertice_network: 
+
+volumes:
+  vertice_data:
+    

@@ -1,0 +1,36 @@
+users: {
+  label: Users
+  shape: sql_table
+  id: int {constraint: primary_key}
+  firstnames: string {constraint: [VARCHAR(60); NOT NULL]}
+  lastnames: string {constraint: [VARCHAR(60); NOT NULL]}
+  email: string {constraint: [VARCHAR(100); unique]}
+  password: string {constraint: [VARCHAR(40); NOT NULL]}
+
+  created_at: timestamp
+  updated_at: timestamp
+  deleted_at?: timestamp
+}
+
+products: {
+  label: Products
+  shape: sql_table
+  id: int {constraint: primary_key}
+  name: string {constraint: [VARCHAR(180); NOT NULL]}
+  details?: string {constraint: TEXT}
+  quantity: int
+  price: float
+
+  created_at: timestamp
+  updated_at: timestamp
+  deleted_at?: timestamp
+}
+
+orders: {
+  label: Orders
+  shape: sql_table
+  id: int {constraint: primary_key}
+  user_id: int
+  product_id: int
+  quantity: int
+}
