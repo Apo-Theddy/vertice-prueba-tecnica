@@ -1,8 +1,8 @@
 # Vertice API
 
-hola bienvenido a la api de vertice aca te dejo una guia rapida para que puedas empezar a probar todo lo que tenemos
-
-la documentacion mas detallada esta en `proyecto/documentation/` por si quieres ver mas a fondo
+Guia rapida para que puedas empezar a probar la api de vertice
+s
+la documentacion mas tecnica esta en `proyecto/documentation/` por si quieres ver mas a fondo
 
 ---
 
@@ -49,6 +49,20 @@ si los datos estan bien te devuelve el token para que puedas hacer cosas que req
 ---
 
 ## endpoints de productos y ordenes
+
+para crear un producto
+
+**GET** a `http://localhost:3000/v1/api/products/`
+
+manda esto
+
+```json
+{
+  "name": "Product 3",
+  "quantity": 20,
+  "price": 50.0
+}
+```
 
 aca puedes ver tus ordenes y crear nuevas
 
@@ -99,3 +113,14 @@ Sigue estos pasos para empezar:
 3. Ejecuta `docker-compose up` para levantar todos los servicios.
 
 ¡Listo! Ahora tendrás la base de datos y Adminer corriendo para que puedas ver y gestionar los datos fácilmente.
+
+## Api en producción
+
+También puedes acceder a la API desplegada en producción a través de Railway en el siguiente enlace:  
+[Vertice API en Railway](https://vertice-prueba-tecnica-production.up.railway.app)
+
+Los endpoints disponibles en producción son los mismos que en local:
+
+- **Auth**: `/v1/api/auth/register` y `/v1/api/auth/login`
+- **Productos**: `/v1/api/products/`
+- **Órdenes**: `/v1/api/orders/`
