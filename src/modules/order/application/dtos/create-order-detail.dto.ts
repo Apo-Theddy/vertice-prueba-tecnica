@@ -1,12 +1,14 @@
-import { IsArray, IsNotEmpty, IsNumber, IsPositive } from 'class-validator';
+import { IsNumber, IsPositive } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateOrderDetailDTO {
-  @IsNotEmpty()
+  @ApiProperty({ example: 5, description: 'Product ID' })
+  @IsNumber()
+  @IsPositive()
+  productId: number;
+
+  @ApiProperty({ example: 2, description: 'Quantity of product' })
   @IsNumber()
   @IsPositive()
   quantity: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  productId: number;
 }

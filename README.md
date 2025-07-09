@@ -1,98 +1,101 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Vertice API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+hola bienvenido a la api de vertice aca te dejo una guia rapida para que puedas empezar a probar todo lo que tenemos
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+la documentacion mas detallada esta en `proyecto/documentation/` por si quieres ver mas a fondo
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Endpoints de auth
 
-## Project setup
+aca puedes registrarte y loguearte para empezar a usar la api
 
-```bash
-$ yarn install
+### registro
+
+usa este endpoint para crear tu cuenta
+
+**POST** a `http://localhost:3000/v1/api/auth/register`
+
+esto es lo que tienes que mandar
+
+```json
+{
+  "firstnames": "juan jesus",
+  "lastnames": "esquives zapata",
+  "email": "juanjesus@gmail.com",
+  "password": "12346789"
+}
 ```
 
-## Compile and run the project
+si todo sale bien te va a devolver tu usuario y un token para que puedas autenticarte
 
-```bash
-# development
-$ yarn run start
+### login
 
-# watch mode
-$ yarn run start:dev
+aca te logueas con tu correo y clave
 
-# production mode
-$ yarn run start:prod
+**POST** a `http://localhost:3000/v1/api/auth/login`
+
+manda esto
+
+```json
+{
+  "email": "juanjesus@gmail.com",
+  "password": "12346789"
+}
 ```
 
-## Run tests
+si los datos estan bien te devuelve el token para que puedas hacer cosas que requieren estar logueado
 
-```bash
-# unit tests
-$ yarn run test
+---
 
-# e2e tests
-$ yarn run test:e2e
+## endpoints de productos y ordenes
 
-# test coverage
-$ yarn run test:cov
+aca puedes ver tus ordenes y crear nuevas
+
+### ver tus ordenes
+
+**GET** a `http://localhost:3000/v1/api/orders/`
+
+tienes que mandar el token en el header Authorization asi
+
+```
+Authorization: Bearer tu_token
 ```
 
-## Deployment
+te devuelve todas las ordenes que hiciste
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+---
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### crear una nueva orden
 
-```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+**POST** a `http://localhost:3000/v1/api/orders/`
+
+manda algo asi
+
+```json
+{
+  "shippingAddress": "Peru - Lima",
+  "orderDetails": [
+    {
+      "quantity": 1,
+      "productId": 3
+    }
+  ]
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+si todo esta bien te devuelve la orden creada
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+Para usar este proyecto necesitas tener Node.js y Docker instalados en tu máquina.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+La forma más sencilla de ponerlo en marcha es usando el `docker-compose` que ya viene configurado. Esto te permitirá levantar la base de datos, Adminer y la API sin complicaciones. Solo asegúrate de tener tu archivo `.env` con las variables de entorno necesarias.
 
-## Support
+Sigue estos pasos para empezar:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+1. Clona el repositorio.
+2. Copia el archivo `.env.example` a `.env` y completa las variables que faltan.
+3. Ejecuta `docker-compose up` para levantar todos los servicios.
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+¡Listo! Ahora tendrás la base de datos y Adminer corriendo para que puedas ver y gestionar los datos fácilmente.

@@ -5,7 +5,7 @@ import { RepositoryNames } from 'src/shared/constants/repository-names.constant'
 import { Result } from 'src/shared/patterns/result.pattern';
 import { Order } from '../../domain/entities/order.entity';
 import { CreateOrderDTO } from '../dtos/create-order.dto';
-import { OrderResponseMapper } from '../mapper/order-response.mapper';
+import { OrderResponseMapperDTO } from '../mapper/order-response.mapper';
 
 export class CreateOrderImplUseCase implements CreateOrderUseCase {
   constructor(
@@ -16,7 +16,7 @@ export class CreateOrderImplUseCase implements CreateOrderUseCase {
   public async create(
     userId: number,
     dto: CreateOrderDTO,
-  ): Promise<Result<OrderResponseMapper, HttpException>> {
+  ): Promise<Result<OrderResponseMapperDTO, HttpException>> {
     return this.repository.create(userId, dto);
   }
 }

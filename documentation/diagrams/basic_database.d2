@@ -1,0 +1,83 @@
+database: {
+  label: "Vertice Simple DB"
+  shape: cylinder
+  style.fill: "#e8f4f8"
+
+  # Tabla de Usuarios
+  users: {
+    label: "Users"
+    shape: sql_table
+    style.fill: "#fff2cc"
+
+    id: "INT PRIMARY KEY AUTO_INCREMENT"
+    firstnames: "VARCHAR(60) NOT NULL"
+    lastnames: "VARCHAR(60) NOT NULL"
+    email: "VARCHAR(100) UNIQUE NOT NULL"
+    password: "VARCHAR(255) NOT NULL"
+
+    created_at: "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+    updated_at: "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+    deleted_at: "TIMESTAMP NULL"
+  }
+
+  products: {
+    label: "Products"
+    shape: sql_table
+    style.fill: "#d5e8d4"
+
+    id: "INT PRIMARY KEY AUTO_INCREMENT"
+    name: "VARCHAR(180) NOT NULL"
+    description: "TEXT"
+    price: "DECIMAL(10,2) NOT NULL"
+    stock: "VARCHAR(50) UNIQUE"
+
+    created_at: "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+    updated_at: "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+    deleted_at: "TIMESTAMP NULL"
+  }
+
+  orders: {
+    label: "Orders"
+    shape: sql_table
+    style.fill: "#f8cecc"
+
+    id: "INT PRIMARY KEY AUTO_INCREMENT"
+    user_id: "INT NOT NULL"
+    total_amount: "DECIMAL(10,2) NOT NULL"
+    shipping_address: "TEXT"
+
+    created_at: "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+    updated_at: "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+  }
+
+  order_details: {
+    label: "Order Details"
+    shape: sql_table
+    style.fill: "#e1d5e7"
+
+    id: "INT PRIMARY KEY AUTO_INCREMENT"
+    order_id: "INT NOT NULL"
+    product_id: "INT NOT NULL"
+    quantity: "INT NOT NULL"
+
+    created_at: "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+  }
+
+  orders.user_id -> users.id: {
+    label: "FK_orders_users"
+    style.stroke: "#2563eb"
+    style.stroke-width: 2
+  }
+
+  order_details.order_id -> orders.id: {
+    label: "FK_order_details_orders"
+    style.stroke: "#dc2626"
+    style.stroke-width: 2
+  }
+
+  order_details.product_id -> products.id: {
+    label: "FK_order_details_products"
+    style.stroke: "#16a34a"
+    style.stroke-width: 2
+  }
+}

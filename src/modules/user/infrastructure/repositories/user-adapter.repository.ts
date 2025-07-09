@@ -1,4 +1,4 @@
-import { HttpException, Inject, Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { IsNull, Repository } from 'typeorm';
 import { User } from '../../domain/entities/user.entity';
@@ -8,6 +8,7 @@ import { CreateUserDTO } from '../../application/dtos/create-user.dto';
 import { EmailUserAlreadyExists } from '../../domain/exceptions/email-user-already-exists.exception';
 import { EmailNotFoundException } from '../../domain/exceptions/email-not-found.exception';
 import { UserNotFoundException } from '../../domain/exceptions/user-not-found.exception';
+import { UserResponse } from '../../application/types/user-response.type';
 
 @Injectable()
 export class UserAdapterRepository implements UserRepository {
@@ -34,9 +35,12 @@ export class UserAdapterRepository implements UserRepository {
     return Ok(user);
   }
 
-  public async profile(id: number): Promise<Result<User, HttpException>> {
+  public async profile(
+    id: number,
+  ): Promise<Result<UserResponse, HttpException>> {
     const user = await this.provider.findOneBy({ id, deletedAt: IsNull() });
     if (!user) return Fail(new UserNotFoundException());
-    return Ok(user);
+    const { password, ...rest } = user;
+    return Ok(rest);
   }
 }

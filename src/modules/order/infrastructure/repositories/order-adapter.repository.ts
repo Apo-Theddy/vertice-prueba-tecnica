@@ -9,7 +9,7 @@ import { CreateOrderDTO } from '../../application/dtos/create-order.dto';
 import { Product } from 'src/modules/product/domain/entities/product.entity';
 import { ProductNotFoundException } from '../../domain/exceptions/product-not-found.exception';
 import { ProductNotAvailableInStockException } from '../../domain/exceptions/product-no-available.exception';
-import { OrderResponseMapper } from '../../application/mapper/order-response.mapper';
+import { OrderResponseMapperDTO } from '../../application/mapper/order-response.mapper';
 
 @Injectable()
 export class OrderAdapterRepository implements OrderRepository {
@@ -22,7 +22,7 @@ export class OrderAdapterRepository implements OrderRepository {
   public async create(
     userId: number,
     dto: CreateOrderDTO,
-  ): Promise<Result<OrderResponseMapper, HttpException>> {
+  ): Promise<Result<OrderResponseMapperDTO, HttpException>> {
     return await this.dataSource.transaction(async (manager) => {
       const orderDetails: OrderDetail[] = [];
       let totalAmount = 0;
@@ -47,11 +47,13 @@ export class OrderAdapterRepository implements OrderRepository {
       const order = manager.create(Order, {
         user: { id: userId },
         orderDetails: savedOrderDetails,
+        shippingAddress: dto.shippingAddress,
         totalAmount,
       });
       const savedOrder = await manager.save(Order, order);
       return Ok({
         totalAmount,
+
         products: savedOrder.orderDetails,
       });
     });

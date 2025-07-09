@@ -1,0 +1,295 @@
+# UML
+uml: {
+  label: "UML Diagrams"
+  style.fill: "#f3f4f6"
+
+  user: {
+    label: "User Module"
+    style.fill: "#fef3c7"
+
+    repository: {
+      label: "User Repository"
+      shape: class
+
+      +create(dto CreateUserDTO): Promise<Result<User, HttpException>>
+      +findByEmail(email string): Promise<Result<User, HttpException>>
+      +profile(id int): Promise<Result<UserResponse, HttpException>>
+    }
+
+    repository_adapter: {
+      label: "User Repository Adapter"
+      shape: class
+
+      +create(dto CreateUserDTO): Promise<Result<User, HttpException>>
+      +findByEmail(email string): Promise<Result<User, HttpException>>
+      +profile(id int): Promise<Result<UserResponse, HttpException>>
+    }
+
+    ports: {
+      label: "User Ports"
+      shape: class
+
+      +createUserUseCase(dto CreateUserDTO): Promise<Result<User, HttpException>>
+      +findUserByEmail(email string): Promise<Result<User, HttpException>>
+      +getUserProfile(id int): Promise<Result<UserResponse, HttpException>>
+    }
+
+    ports_impl: {
+      label: "User Ports Implementation"
+      shape: class
+
+      +createUserUseCase(dto CreateUserDTO): Promise<Result<User, HttpException>>
+      +findUserByEmail(email string): Promise<Result<User, HttpException>>
+      +getUserProfile(id int): Promise<Result<UserResponse, HttpException>>
+    }
+
+    services: {
+      label: "User Services"
+      shape: class
+
+      +getUserProfile(id int): Promise<Result<UserResponse, HttpException>>
+    }
+
+    controllers: {
+      label: "User Controllers"
+      shape: class
+
+      +getUserProfileController(id int): Promise<Result<UserResponse, HttpException>>
+    }
+
+    repository_adapter -> repository: {
+      style.stroke-dash: 5
+      label: "Implements UserRepository"
+    }
+    ports_impl -> ports: {
+      style.stroke-dash: 5
+      label: "Implements UserPorts"
+    }
+    ports -> repository: {
+      style.stroke-dash: 5
+      label: "Uses UserRepository"
+    }
+    services -> ports: {
+      style.stroke-dash: 5
+      label: "Uses UserPorts"
+    }
+    controllers -> services: {
+      style.stroke-dash: 5
+      label: "Uses UserServices"
+    }
+  }
+
+  product: {
+    label: "Product Module"
+    style.fill: "#d1fae5"
+
+    repository: {
+      label: "Product Repository"
+      shape: class
+
+      +create(dto CreateProductDTO): Promise<Result<Product, HttpException>>
+    }
+
+    repository_adapter: {
+      label: "Product Repository Adapter"
+      shape: class
+
+      +create(dto CreateProductDTO): Promise<Result<Product, HttpException>>
+    }
+
+    ports: {
+      label: "Product Ports"
+      shape: class
+
+      +createProductUseCase(dto CreateProductDTO): Promise<Result<Product, HttpException>>
+    }
+
+    ports_impl: {
+      label: "Product Ports Implementation"
+      shape: class
+
+      +createProductUseCase(dto CreateProductDTO): Promise<Result<Product, HttpException>>
+    }
+
+    services: {
+      label: "Product Services"
+      shape: class
+
+      +createProduct(dto CreateProductDTO): Promise<Result<Product, HttpException>>
+    }
+
+    controllers: {
+      label: "Product Controllers"
+      shape: class
+
+      +createProductController(dto CreateProductDTO): Promise<Result<Product, HttpException>>
+    }
+
+    repository_adapter -> repository: {
+      style.stroke-dash: 5
+      label: "Implements ProductRepository"
+    }
+    ports_impl -> ports: {
+      style.stroke-dash: 5
+      label: "Implements ProductPorts"
+    }
+    ports -> repository: {
+      style.stroke-dash: 5
+      label: "Uses ProductRepository"
+    }
+    services -> ports: {
+      style.stroke-dash: 5
+      label: "Uses ProductPorts"
+    }
+    controllers -> services: {
+      style.stroke-dash: 5
+      label: "Uses ProductServices"
+    }
+  }
+
+  order: {
+    label: "Order Module"
+    style.fill: "#e0f2fe"
+
+    repository: {
+      label: "Order Repository"
+      shape: class
+
+      +create(userId int, dto CreateOrderDTO): Promise<Result<OrderResponseMapperDTO, HttpException>>
+      +getOrderByUserId(userId int): "Promise<Result<Order[], HttpException>>"
+    }
+
+    repository_adapter: {
+      label: "Order Repository Adapter"
+      shape: class
+
+      +create(userId int, dto CreateOrderDTO): Promise<Result<OrderResponseMapperDTO, HttpException>>
+      +getOrderByUserId(userId int): "Promise<Result<Order[], HttpException>>"
+    }
+
+    ports: {
+      label: "Order Ports"
+      shape: class
+
+      +createOrderUseCase(userId int, dto CreateOrderDTO): Promise<Result<OrderResponseMapperDTO, HttpException>>
+      +getOrdersByUserId(userId int): "Promise<Result<Order[], HttpException>>"
+    }
+
+    ports_impl: {
+      label: "Order Ports Implementation"
+      shape: class
+
+      +createOrderUseCase(userId int, dto CreateOrderDTO): Promise<Result<OrderResponseMapperDTO, HttpException>>
+      +getOrdersByUserId(userId int): "Promise<Result<Order[], HttpException>>"
+    }
+
+    services: {
+      label: "Order Services"
+      shape: class
+
+      +createOrder(userId int, dto CreateOrderDTO): Promise<Result<OrderResponseMapperDTO, HttpException>>
+      +getOrdersByUserId(userId int): "Promise<Result<Order[], HttpException>>"
+    }
+    controllers: {
+      label: "Order Controllers"
+      shape: class
+
+      +createOrderController(userId int, dto CreateOrderDTO): Promise<Result<OrderResponseMapperDTO, HttpException>>
+      +getOrdersByUserIdController(userId int): "Promise<Result<Order[], HttpException>>"
+    }
+
+    repository_adapter -> repository: {
+      style.stroke-dash: 5
+      label: "Implements OrderRepository"
+    }
+    ports_impl -> ports: {
+      style.stroke-dash: 5
+      label: "Implements OrderPorts"
+    }
+    ports -> repository: {
+      style.stroke-dash: 5
+      label: "Uses OrderRepository"
+    }
+    services -> ports: {
+      style.stroke-dash: 5
+      label: "Uses OrderPorts"
+    }
+    controllers -> services: {
+      style.stroke-dash: 5
+      label: "Uses OrderServices"
+    }
+  }
+
+  auth: {
+    label: "Auth Module"
+    style.fill: "#ede9fe"
+
+    repository: {
+      label: "Auth Repository"
+      shape: class
+
+      +login(loginDto LoginDTO): Promise<Result<AuthResponseDTO, HttpException>>
+      +register(registerDto RegisterDTO): Promise<Result<User, HttpException>>
+    }
+
+    repository_adapter: {
+      label: "Auth Repository Adapter"
+      shape: class
+
+      +login(loginDto LoginDTO): Promise<Result<AuthResponseDTO, HttpException>>
+      +register(registerDto RegisterDTO): Promise<Result<User, HttpException>>
+    }
+
+    ports: {
+      label: "Auth Ports"
+      shape: class
+
+      +loginUseCase(loginDto LoginDTO): Promise<Result<AuthResponseDTO, HttpException>>
+      +registerUseCase(registerDto RegisterDTO): Promise<Result<User, HttpException>>
+    }
+
+    ports_impl: {
+      label: "Auth Ports Implementation"
+      shape: class
+
+      +loginUseCase(loginDto LoginDTO): Promise<Result<AuthResponseDTO, HttpException>>
+      +registerUseCase(registerDto RegisterDTO): Promise<Result<User, HttpException>>
+    }
+
+    services: {
+      label: "Auth Services"
+      shape: class
+
+      +login(loginDto LoginDTO): Promise<Result<AuthResponseDTO, HttpException>>
+      +register(registerDto RegisterDTO): Promise<Result<User, HttpException>>
+    }
+    controllers: {
+      label: "Auth Controllers"
+      shape: class
+
+      +loginController(loginDto LoginDTO): Promise<Result<AuthResponseDTO, HttpException>>
+      +registerController(registerDto RegisterDTO): Promise<Result<User, HttpException>>
+    }
+
+    repository_adapter -> repository: {
+      style.stroke-dash: 5
+      label: "Implements AuthRepository"
+    }
+    ports_impl -> ports: {
+      style.stroke-dash: 5
+      label: "Implements AuthPorts"
+    }
+    ports -> repository: {
+      style.stroke-dash: 5
+      label: "Uses AuthRepository"
+    }
+    services -> ports: {
+      style.stroke-dash: 5
+      label: "Uses AuthPorts"
+    }
+    controllers -> services: {
+      style.stroke-dash: 5
+      label: "Uses AuthServices"
+    }
+  }
+}

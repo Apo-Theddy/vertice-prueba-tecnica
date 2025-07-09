@@ -28,6 +28,13 @@ export class Order {
   })
   totalAmount: number;
 
+  @Column({
+    name: 'shipping_address',
+    type: 'text',
+    nullable: false,
+  })
+  shippingAddress: string;
+
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'user_id' })
   user: User;

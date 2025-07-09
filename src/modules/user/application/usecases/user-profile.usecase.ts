@@ -4,6 +4,7 @@ import { UserRepository } from '../../infrastructure/repositories/user.repositor
 import { HttpException, Inject } from '@nestjs/common';
 import { Result } from 'src/shared/patterns/result.pattern';
 import { User } from '../../domain/entities/user.entity';
+import { UserResponse } from '../types/user-response.type';
 
 export class UserProfileImplUseCase implements UserProfileUseCase {
   constructor(
@@ -11,7 +12,9 @@ export class UserProfileImplUseCase implements UserProfileUseCase {
     private readonly repository: UserRepository,
   ) {}
 
-  public async profile(id: number): Promise<Result<User, HttpException>> {
+  public async profile(
+    id: number,
+  ): Promise<Result<UserResponse, HttpException>> {
     return this.repository.profile(id);
   }
 }

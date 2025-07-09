@@ -26,6 +26,20 @@ services:
     networks:
       - vertice_network
 
+  api:
+    container_name: vertice_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - "3000:3000"
+    depends_on:
+      - database
+    env_file:
+      - .env
+    networks:
+      - vertice_network
+
 networks:
   vertice_network: 
 

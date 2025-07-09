@@ -8,6 +8,7 @@ import { User } from '../../domain/entities/user.entity';
 import { CreateUserDTO } from '../dtos/create-user.dto';
 import { UserProfileUseCase } from '../../domain/ports/in/user-profile.usecase';
 import { UserProfileImplUseCase } from '../usecases/user-profile.usecase';
+import { UserResponse } from '../types/user-response.type';
 
 @Injectable()
 export class UserService
@@ -31,7 +32,9 @@ export class UserService
     return this.findUserByEmailImpl.findByEmail(email);
   }
 
-  public async profile(id: number): Promise<Result<User, HttpException>> {
+  public async profile(
+    id: number,
+  ): Promise<Result<UserResponse, HttpException>> {
     return this.userProfileImpl.profile(id);
   }
 }

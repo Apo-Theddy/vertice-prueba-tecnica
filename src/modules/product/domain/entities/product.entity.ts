@@ -21,11 +21,11 @@ export class Product {
   name: string;
 
   @Column({
-    name: 'details',
+    name: 'description',
     type: 'text',
     nullable: true,
   })
-  details?: string;
+  description?: string;
 
   @Column({
     name: 'stock',

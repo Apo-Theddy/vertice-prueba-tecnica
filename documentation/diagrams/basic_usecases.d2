@@ -1,0 +1,162 @@
+typeorm: {
+  label: "TypeORM"
+  shape: hexagon
+  style.fill: "#122a25"
+  style.font-color: white
+}
+
+api: {
+  label: "API REST"
+
+  controllers: {
+    label: "Controllers"
+
+    userController: {
+      label: "User Controller"
+      shape: rectangle
+    }
+
+    productController: {
+      label: "Product Controller"
+      shape: rectangle
+    }
+
+    orderController: {
+      label: "Order Controller"
+      shape: rectangle
+    }
+  }
+
+  services: {
+    label: "Services"
+
+    userService: {
+      label: "User Service"
+      shape: rectangle
+    }
+
+    productService: {
+      label: "Product Service"
+      shape: rectangle
+    }
+
+    orderService: {
+      label: "Order Service"
+      shape: rectangle
+    }
+  }
+}
+
+users_usecases: {
+  label: "Casos de Uso - Usuarios"
+  style.fill: "#fef3c7"
+
+  actor: {
+    label: "Usuario"
+    shape: person
+    style.fill: "#f59e0b"
+  }
+
+  cases: {
+    label: "Casos de Uso"
+
+    register: {
+      label: "Registrar Usuario"
+      shape: oval
+      style.fill: "#bfdbfe"
+    }
+
+    login: {
+      label: "Iniciar Sesión"
+      shape: oval
+      style.fill: "#bfdbfe"
+    }
+
+    profile: {
+      label: "Ver Perfil"
+      shape: oval
+      style.fill: "#bfdbfe"
+    }
+  }
+
+  actor -> cases.register
+  actor -> cases.login
+  actor -> cases.profile
+}
+
+orders_usecases: {
+  label: "Casos de Uso - Ordenes"
+  style.fill: "#fce7f3"
+
+  actor: {
+    label: "Cliente"
+    shape: person
+    style.fill: "#ec4899"
+  }
+
+  cases: {
+    label: "Casos de Uso"
+
+    createOrder: {
+      label: "Crear orden"
+      shape: oval
+      style.fill: "#ddd6fe"
+    }
+
+    viewOrders: {
+      label: "Ver mis ordenes"
+      shape: oval
+      style.fill: "#ddd6fe"
+    }
+  }
+
+  actor -> cases.createOrder
+  actor -> cases.viewOrders
+}
+
+products_usecases: {
+  label: "Casos de Uso - Productos"
+  style.fill: "#d1fae5"
+
+  admin: {
+    label: "Administrador"
+    shape: person
+    style.fill: "#16a34a"
+  }
+
+  cases: {
+    label: "Casos de Uso"
+    createProduct: {
+      label: "Crear Producto"
+      shape: oval
+      style.fill: "#bbf7d0"
+    }
+  }
+
+  admin -> cases.createProduct
+}
+
+api.controllers.userController -> api.services.userService
+api.controllers.productController -> api.services.productService
+api.controllers.orderController -> api.services.orderService
+
+api.services.userService -> typeorm
+api.services.productService -> typeorm
+api.services.orderService -> typeorm
+
+typeorm -> database
+
+users_usecases.cases -> api.controllers.userController: {
+  style.stroke-dash: 5
+  label: "HTTP Requests"
+}
+
+orders_usecases.cases -> api.controllers.orderController: {
+  style.stroke-dash: 5
+  label: "HTTP Requests"
+}
+
+products_usecases -> api.controllers.productController: {
+  style.stroke-dash: 5
+  label: "HTTP Requests"
+}
